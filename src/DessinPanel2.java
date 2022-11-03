@@ -10,7 +10,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
@@ -22,7 +21,6 @@ import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 
 import javax.swing.JPanel;
-import javax.swing.KeyStroke;
 
 /**
  * @param DessinPanel2
@@ -50,11 +48,9 @@ public class DessinPanel2 extends JPanel {
 	private FormGeo lastFormGeo = null;
 	private String lastFichier = ".";
 	private int Toutselec;
-	private Color couleur;
 	private int TAILLECARREE = 30;
 	private FormGeo.Type typeDeForme = FormGeo.Type.RECT;
 	private Object object;
-	private int touche;
 
 	public DessinPanel2() {
 		formesGeo = new ArrayList<FormGeo>();
@@ -273,12 +269,11 @@ public class DessinPanel2 extends JPanel {
 
 					for (FormGeo f : selectedFormesGeo) {
 						f.moveBy(dx, dy);
-						if (Toutselec != 1) {
 							// Pour arreter la selection de plusieur fichier
 							// et le deplacer en meme temp
 							// en cas ou on clique appui pas la touche
 							// majuscule enfoncer
-							if (selectedFormesGeo.size() >= 0)// si la
+							if (Toutselec != 1 && selectedFormesGeo.size() >= 0)// si la
 																// taille du
 																// tableau
 								// selectedFormGeo est egal et superieur a
@@ -287,7 +282,6 @@ public class DessinPanel2 extends JPanel {
 															// dans le
 															// tableau
 
-						}
 
 					}
 					/**
@@ -338,10 +332,8 @@ public class DessinPanel2 extends JPanel {
 
 			object = in.readObject();
 			while (object != null) {
-				if (object != null) {
 					formesGeo.add((FormGeo) object);
 					object = in.readObject();
-				}
 			}
 			in.close();
 			repaint();
